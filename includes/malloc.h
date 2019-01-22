@@ -7,4 +7,10 @@
 #ifndef MALLOC_H
 #define MALLOC_H
 
+#include <stddef.h>
+
+typedef struct malloc_s {
+	struct malloc_s *next;
+} malloc_t;
+
 #endif

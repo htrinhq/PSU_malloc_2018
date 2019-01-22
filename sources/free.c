@@ -4,3 +4,10 @@
 ** File description:
 ** free.c,
 */
+
+#include "malloc.h"
+
+void *free(void *ptr)
+{
+
+}
