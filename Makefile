@@ -9,7 +9,10 @@ INCLDIR	= includes/
 
 SRCDIR	= sources/
 
-SRC	=	main.c
+SRC	=	realloc.c\
+		free.c\
+		malloc.c\
+		show_alloc_mem.c
 
 SRCS	=	$(addprefix $(SRCDIR), $(SRC))
 

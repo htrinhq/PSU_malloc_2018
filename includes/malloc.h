@@ -8,6 +8,7 @@
 #define MALLOC_H
 
 #include <stddef.h>
+#include <unistd.h>
 
 typedef struct malloc_s {
 	struct malloc_s *next;
