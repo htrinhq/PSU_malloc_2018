@@ -7,50 +7,48 @@
 
 #include "malloc.h"
 
-block_t new_block(block_t  last, size_t size)
+block_t new_block(size_t size)
 {
-    block_t new = sbrk(0);
-    if (sbrk(BLOCK_SIZE + size) == (void *) -1)
+    void *block = sbrk(BLOCK_SIZE + size);
+    block_t new;
+
+    if (block == (void *)-1)
         return NULL;
+    new = block;
     new->size = size;
     new->free = false;
     new->next = NULL;
-    if (last)
-        last->next = new;
     return new;
 }
 
-block_t find_block(block_t  last, size_t size)
+block_t find_block(size_t size)
 {
     block_t current = head;
 
     while (current) {
         if (current->free && current->size >= size)
             return current;
-        current =  current->next;
+        current = current->next;
     }
     return NULL;
 }
 
 void *malloc(size_t size)
 {
-    size_t total_size;
-    block_t block;
+    block_t header;
     static block_t last;
-    
-    if (head) {
-        if (!size)
-            return NULL;
-        last = head;
-        block = find_block(last, size);
-        if (block) {
-            block->free = false;
-        }
+
+    if (!size)
+        return NULL;
+    header = find_block(size);
+    if (header) {
+            header->free = false;
+            return (void *)(header + 1);
     } else {
-        block = new_block(last, size);
-        if (!block)
+        header = new_block(size);
+        if (!header)
             return NULL;
-        head = block;
+        head = header;
     }
-    return (void *)(block + 1);
+    return (void *)(header + 1);
 }
