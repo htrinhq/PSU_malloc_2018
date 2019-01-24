@@ -32,6 +32,7 @@ block_t new_block(size_t size);
 block_t find_block(size_t size);
 void *realloc(void *ptr, size_t size);
 void show_alloc_mem(void);
-void *free(void *ptr);
+void free(void *ptr);
+block_t fusion_block(block_t block);
 
 #endif
