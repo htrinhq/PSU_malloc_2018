@@ -3,6 +3,7 @@ CMakeLists.txt
 .idea
 cmake-build-debug
 libmy_malloc.so
+main.c
 ### C template
 # Prerequisites
 *.d
@@ -131,3 +132,4 @@ Supprimerait cmake-build-debug/CMakeFiles/progress.marks
 Supprimerait cmake-build-debug/Makefile
 Supprimerait cmake-build-debug/cmake_install.cmake
 Supprimerait cmake-build-debug/cpp_d13_2018.cbp
+Supprimerait sources/main.c

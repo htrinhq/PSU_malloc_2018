@@ -25,7 +25,7 @@ NAME	=	libmy_malloc.so
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CXX) -o $@ $^ $(LDFLAGS)
+	$(CXX) -shared -o $@ $^
 
 clean:
 	rm -f $(OBJS)

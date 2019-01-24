@@ -12,10 +12,8 @@
 #include <stdint.h>
 
 typedef uint8_t bool_t;
-
 #define true 1
 #define false 0
-
 #define ALIGN(x)  (((((x) - 1) >> 2) << 2) + 4)
 #define BLOCK_SIZE sizeof(struct s_block)
 
@@ -26,5 +24,14 @@ struct s_block {
 	t_block next;
 	bool_t free;
 };
+
+static t_block head = NULL;
+
+void *malloc(size_t size);
+t_block new_block(t_block last, size_t size);
+t_block find_block(t_block  last, size_t size);
+void *realloc(void *ptr, size_t size);
+void show_alloc_mem(void);
+void *free(void *ptr);
 
 #endif
