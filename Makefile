@@ -16,7 +16,9 @@ SRC	=	realloc.c\
 
 SRCS	=	$(addprefix $(SRCDIR), $(SRC))
 
-CFLAGS	=	-Wall -Wextra -g3 -I$(INCLDIR)
+CC  =   gcc
+
+CFLAGS	=	-Wall -Wextra -g3 -I$(INCLDIR) -fPIC
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -25,7 +27,7 @@ NAME	=	libmy_malloc.so
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CXX) -shared -o $@ $^
+	$(CC) -shared -o $@ $^
 
 clean:
 	rm -f $(OBJS)
