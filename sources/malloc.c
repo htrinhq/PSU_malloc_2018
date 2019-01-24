@@ -20,7 +20,6 @@ block_t new_block(size_t size)
     new->next = NULL;
     if (!head) {
         head = new;
-        write(1, "here\n", 5);
     }
     return new;
 }

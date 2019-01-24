@@ -16,20 +16,17 @@ block_t fusion_block(block_t block)
     return (block);
 }
 
+block_t get_block_ptr(void *ptr)
+{
+    return (block_t)ptr - 1;
+}
+
 void free(void *ptr)
 {
-    block_t header = (block_t)ptr - 1;
-    block_t tmp;
-    void *end = sbrk(0);
+    block_t block;
 
-    if ((char *)ptr + header->size == end) {
-        tmp = head;
-        while (tmp->next->next != NULL)
-            tmp = tmp->next;
-        tmp->next = NULL;
-        sbrk(0 - (sizeof(block_t) + header->size));
-    } else {
-        header->free = true;
-        fusion_block(header);
-    }
+    if (!ptr)
+        return;
+    block = get_block_ptr(ptr);
+    block->free = true;
 }
