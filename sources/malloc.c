@@ -7,9 +7,9 @@
 
 #include "malloc.h"
 
-t_block new_block(t_block  last, size_t size)
+block_t new_block(block_t  last, size_t size)
 {
-    t_block new = sbrk(0);
+    block_t new = sbrk(0);
     if (sbrk(BLOCK_SIZE + size) == (void *) -1)
         return NULL;
     new->size = size;
@@ -20,9 +20,9 @@ t_block new_block(t_block  last, size_t size)
     return new;
 }
 
-t_block find_block(t_block  last, size_t size)
+block_t find_block(block_t  last, size_t size)
 {
-    t_block current = head;
+    block_t current = head;
 
     while (current) {
         if (current->free && current->size >= size)
@@ -35,8 +35,8 @@ t_block find_block(t_block  last, size_t size)
 void *malloc(size_t size)
 {
     size_t total_size;
-    t_block block;
-    static t_block last;
+    block_t block;
+    static block_t last;
     
     if (head) {
         if (!size)
