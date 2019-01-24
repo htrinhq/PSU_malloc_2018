@@ -18,6 +18,10 @@ block_t new_block(size_t size)
     new->size = size;
     new->free = false;
     new->next = NULL;
+    if (!head) {
+        head = new;
+        write(1, "here\n", 5);
+    }
     return new;
 }
 
@@ -36,7 +40,6 @@ block_t find_block(size_t size)
 void *malloc(size_t size)
 {
     block_t header;
-    static block_t last;
 
     if (!size)
         return NULL;
@@ -48,7 +51,6 @@ void *malloc(size_t size)
         header = new_block(size);
         if (!header)
             return NULL;
-        head = header;
     }
     return (void *)(header + 1);
 }
