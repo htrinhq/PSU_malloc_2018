@@ -10,6 +10,7 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <string.h>
 
 typedef uint8_t bool_t;
 #define true 1

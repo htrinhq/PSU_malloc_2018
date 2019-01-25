@@ -86,6 +86,8 @@ dkms.conf
 # Icon must end with two \r
 Icon
 
+reverse_me_to_improve_your_malloc
+
 # Thumbnails
 ._*
 
