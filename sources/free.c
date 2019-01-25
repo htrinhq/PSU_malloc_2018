@@ -16,6 +16,19 @@ block_t fusion_block(block_t block)
     return (block);
 }
 
+block_t split_block(block_t block, size_t size)
+{
+    void *new = sbrk(BLOCK_SIZE + (block->size - size));
+    block_t split = new;
+
+    split->size = size;
+    split->free = true;
+    split->next = block->next;
+    block->size -= size + BLOCK_SIZE;
+    block->next = split;
+    return (block);
+}
+
 block_t get_block_ptr(void *ptr)
 {
     return (block_t)ptr - 1;

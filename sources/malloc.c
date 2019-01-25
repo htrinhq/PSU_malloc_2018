@@ -29,9 +29,11 @@ block_t find_block(size_t size)
     block_t current = head;
 
     while (current) {
-        if (current->free && current->size >= size)
+        if (current->free && current->size >= size) {
+            if (current->size >= ((2 * size) + BLOCK_SIZE))
+                current = split_block(current, size);
             return current;
-        else if (current->free)
+        } else if (current->free)
             current = fusion_block(current);
         current = current->next;
     }
