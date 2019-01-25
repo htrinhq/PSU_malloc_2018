@@ -42,8 +42,8 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-fclean mac: clean
-    rm -rf $(MAC)
+cmac: clean
+	rm -rf $(MAC)
 
 re: fclean all
 
