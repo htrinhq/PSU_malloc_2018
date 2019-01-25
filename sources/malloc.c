@@ -48,8 +48,8 @@ void *malloc(size_t size)
         return NULL;
     header = find_block(size);
     if (header) {
-            header->free = false;
-            return (void *)(header + 1);
+        header->free = false;
+        return (void *)(header + 1);
     } else {
         header = new_block(size);
         if (!header)
