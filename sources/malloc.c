@@ -31,6 +31,8 @@ block_t find_block(size_t size)
     while (current) {
         if (current->free && current->size >= size)
             return current;
+        else if (current->free)
+            current = fusion_block(current);
         current = current->next;
     }
     return NULL;
