@@ -7,6 +7,8 @@
 
 #include "malloc.h"
 
+void *head = NULL;
+
 block_t new_block(size_t size)
 {
     void *block = sbrk(BLOCK_SIZE + size);

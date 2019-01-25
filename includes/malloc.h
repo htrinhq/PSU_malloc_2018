@@ -26,7 +26,7 @@ struct s_block {
 	bool_t free;
 };
 
-block_t head;
+void *head;
 
 void *malloc(size_t size);
 block_t new_block(size_t size);
