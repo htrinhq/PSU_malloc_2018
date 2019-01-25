@@ -24,16 +24,26 @@ OBJS	=	$(SRCS:.c=.o)
 
 NAME	=	libmy_malloc.so
 
+MAC =   libmy_malloc.dylib
+
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
 	$(CC) -shared -o $@ $^
+
+$(MAC):     $(OBJS)
+	$(CC) -dynamiclib -undefined suppress -flat_namespace -o $@ $^
+
+mac: $(MAC)
 
 clean:
 	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
+
+fclean mac: clean
+    rm -rf $(MAC)
 
 re: fclean all
 
