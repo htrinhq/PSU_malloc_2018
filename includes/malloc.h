@@ -35,5 +35,6 @@ void show_alloc_mem(void);
 void free(void *ptr);
 block_t fusion_block(block_t block);
 block_t get_block_ptr(void *ptr);
+block_t split_block(block_t block, size_t size);
 
 #endif
