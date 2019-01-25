@@ -11,7 +11,6 @@ block_t new_block(size_t size)
 {
     void *block = sbrk(BLOCK_SIZE + size);
     block_t new;
-    // block_t copy;
 
     if (block == (void *)-1)
         return NULL;
@@ -19,17 +18,8 @@ block_t new_block(size_t size)
     new->size = size;
     new->free = false;
     new->next = NULL;
-    if (!head) {
+    if (!head)
         head = new;
-    } /*else {
-        copy = head;
-        write(0, "NEW\n", 4);
-        while (copy->next) {
-            copy = copy->next;
-            write(0, "INSIDE\n", 7);
-        }
-        copy->next = new;
-    }*/
     return new;
 }
 
@@ -58,6 +48,7 @@ void *malloc(size_t size)
 {
     block_t header;
 
+    size = ALIGN(size);
     if (!size)
         return NULL;
     header = find_block(size);
