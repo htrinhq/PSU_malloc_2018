@@ -4,6 +4,7 @@ CMakeLists.txt
 cmake-build-debug
 libmy_malloc.so
 main.c
+reverse_me_to_improve_your_malloc
 ### C template
 # Prerequisites
 *.d
@@ -135,3 +136,4 @@ Supprimerait cmake-build-debug/Makefile
 Supprimerait cmake-build-debug/cmake_install.cmake
 Supprimerait cmake-build-debug/cpp_d13_2018.cbp
 Supprimerait sources/main.c
+Supprimerait reverse_me_to_improve_your_malloc
