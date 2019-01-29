@@ -22,7 +22,7 @@ block_t split_block(block_t block, size_t size)
     block_t tmp = block;
 
     split = (block_t)((char*)block + BLOCK_SIZE + size);
-    split->size = block->size / 2 - BLOCK_SIZE;
+    split->size = block->size - size - BLOCK_SIZE;
     split->free = true;
     split->next = tmp->next;
     block->next = split;

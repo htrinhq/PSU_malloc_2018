@@ -45,7 +45,7 @@ block_t new_block(size_t size)
 
 block_t check_size(block_t block, size_t size)
 {
-    if (block->size >= (2 * (size + BLOCK_SIZE))) {
+    if (block->size > (size + BLOCK_SIZE)) {
         block = split_block(block, size);
     }
     return block;
