@@ -31,13 +31,22 @@ block_t split_block(block_t block, size_t size)
 
 block_t get_block_ptr(void *ptr)
 {
+    block_t tmp = get_head(1);
+
+    while (tmp->next) {
+        if (tmp == ptr)
+            return tmp;
+        tmp = tmp->next;
+    }
     return (block_t)ptr - 1;
 }
 
 int valid_ptr(void *ptr)
 {
-    if (head)
-        if (ptr > head && ptr < sbrk(0))
+    block_t tmp = get_head(10);
+
+    if (tmp)
+        if (ptr > (void *)tmp && ptr < sbrk(0))
             return 1;
     return 0;
 }

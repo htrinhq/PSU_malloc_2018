@@ -15,7 +15,6 @@
 typedef uint8_t bool_t;
 #define true 1
 #define false 0
-#define ALIGN(x)  (((((x) - 1) >> 2) << 2) + 4)
 #define BLOCK_SIZE sizeof(struct s_block)
 
 typedef struct s_block *block_t;
@@ -26,7 +25,7 @@ struct s_block {
 	bool_t free;
 };
 
-void *head;
+block_t head;
 
 void *malloc(size_t size);
 block_t new_block(size_t size);
@@ -37,5 +36,6 @@ void free(void *ptr);
 block_t fusion_block(block_t block);
 block_t get_block_ptr(void *ptr);
 block_t split_block(block_t block, size_t size);
+block_t get_head(size_t size);
 
 #endif

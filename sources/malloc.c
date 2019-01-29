@@ -7,12 +7,30 @@
 
 #include "malloc.h"
 
-void *head = NULL;
+block_t get_head(size_t size)
+{
+    static block_t head = NULL;
+    static bool_t first = true;
+
+    if (first) {
+        void *block = sbrk(BLOCK_SIZE + size);
+
+        if (block == (void *)-1)
+            return NULL;
+        head = block;
+        head->size = size;
+        head->free = false;
+        head->next = NULL;
+        first = false;
+    }
+    return (head);
+}
 
 block_t new_block(size_t size)
 {
     void *block = sbrk(BLOCK_SIZE + size);
     block_t new;
+    block_t tmp = get_head(size);
 
     if (block == (void *)-1)
         return NULL;
@@ -20,12 +38,18 @@ block_t new_block(size_t size)
     new->size = size;
     new->free = false;
     new->next = NULL;
-    if (!head)
-        head = new;
+    if (tmp) {
+        while (tmp->next) {
+            tmp = tmp->next;
+        }
+        tmp->next = new;
+    }
+    else
+        head = get_head(size);
     return new;
 }
 
-block_t check_size(block_t  block, size_t size)
+block_t check_size(block_t block, size_t size)
 {
     if (block->size >= ((2 * size) + BLOCK_SIZE))
         block = split_block(block, size);
@@ -34,11 +58,11 @@ block_t check_size(block_t  block, size_t size)
 
 block_t find_block(size_t size)
 {
-    block_t current = head;
+    block_t current = get_head(1);
 
     while (current) {
         if (current->free && current->size >= size) {
-            return check_size(current, size);
+            return current;
         } else if (current->free)
             current = fusion_block(current);
         current = current->next;
@@ -50,7 +74,6 @@ void *malloc(size_t size)
 {
     block_t header;
 
-    size = ALIGN(size);
     if (!size)
         return NULL;
     header = find_block(size);

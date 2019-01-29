@@ -18,7 +18,7 @@ SRCS	=	$(addprefix $(SRCDIR), $(SRC))
 
 CC  =   gcc
 
-CFLAGS	=	-Wall -Wextra -g3 -I$(INCLDIR) -fPIC
+CFLAGS	=	-Wall -Wextra -g3 -I$(INCLDIR) -fPIC -g
 
 OBJS	=	$(SRCS:.c=.o)
 
