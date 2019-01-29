@@ -14,7 +14,6 @@ block_t get_head(size_t size)
 
     if (first) {
         void *block = sbrk(BLOCK_SIZE + size);
-
         if (block == (void *)-1)
             return NULL;
         head = block;
@@ -38,14 +37,9 @@ block_t new_block(size_t size)
     new->size = size;
     new->free = false;
     new->next = NULL;
-    if (tmp) {
-        while (tmp->next) {
-            tmp = tmp->next;
-        }
-        tmp->next = new;
-    }
-    else
-        head = get_head(size);
+    while (tmp->next)
+        tmp = tmp->next;
+    tmp->next = new;
     return new;
 }
 
@@ -60,11 +54,11 @@ block_t find_block(size_t size)
 {
     block_t current = get_head(1);
 
-    while (current) {
-        if (current->free && current->size >= size) {
+    while (current->next) {
+        if (current->free && current->size >= size)
             return current;
-        } else if (current->free)
-            current = fusion_block(current);
+        //else if (current->free)
+        //    current = fusion_block(current);
         current = current->next;
     }
     return NULL;
@@ -79,6 +73,7 @@ void *malloc(size_t size)
     header = find_block(size);
     if (header) {
         header->free = false;
+        header->size = size;
         return (void *)(header + 1);
     } else {
         header = new_block(size);

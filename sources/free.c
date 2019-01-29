@@ -35,7 +35,7 @@ block_t get_block_ptr(void *ptr)
 
     while (tmp->next) {
         if (tmp == ptr)
-            return tmp;
+            return split_block(ptr, tmp->size);
         tmp = tmp->next;
     }
     return (block_t)ptr - 1;
@@ -43,7 +43,7 @@ block_t get_block_ptr(void *ptr)
 
 int valid_ptr(void *ptr)
 {
-    block_t tmp = get_head(10);
+    block_t tmp = get_head(0);
 
     if (tmp)
         if (ptr > (void *)tmp && ptr < sbrk(0))
