@@ -12,7 +12,8 @@ SRCDIR	= sources/
 SRC	=	realloc.c\
 		free.c\
 		malloc.c\
-		show_alloc_mem.c
+		show_alloc_mem.c\
+		my_put_nbr.c
 
 SRCS	=	$(addprefix $(SRCDIR), $(SRC))
 

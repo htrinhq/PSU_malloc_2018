@@ -18,13 +18,13 @@ block_t fusion_block(block_t block)
 
 block_t split_block(block_t block, size_t size)
 {
-    void *new = sbrk(BLOCK_SIZE + (block->size - size));
-    block_t split = new;
+    block_t split = NULL;
+    block_t tmp = block;
 
-    split->size -= (size + BLOCK_SIZE);
+    split = (block_t)((char*)block + BLOCK_SIZE + size);
+    split->size = block->size / 2 - BLOCK_SIZE;
     split->free = true;
-    split->next = block->next;
-    block->size = size;
+    split->next = tmp->next;
     block->next = split;
     return (block);
 }
@@ -35,7 +35,7 @@ block_t get_block_ptr(void *ptr)
 
     while (tmp->next) {
         if (tmp == ptr)
-            return split_block(ptr, tmp->size);
+            return tmp;
         tmp = tmp->next;
     }
     return (block_t)ptr - 1;

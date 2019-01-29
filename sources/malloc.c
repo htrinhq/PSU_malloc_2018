@@ -45,8 +45,9 @@ block_t new_block(size_t size)
 
 block_t check_size(block_t block, size_t size)
 {
-    if (block->size >= ((2 * size) + BLOCK_SIZE))
+    if (block->size >= (2 * (size + BLOCK_SIZE))) {
         block = split_block(block, size);
+    }
     return block;
 }
 
@@ -55,10 +56,8 @@ block_t find_block(size_t size)
     block_t current = get_head(1);
 
     while (current->next) {
-        if (current->free && current->size >= size)
-            return current;
-        //else if (current->free)
-        //    current = fusion_block(current);
+        if (current->free && current->size > size)
+            return check_size(current, size);
         current = current->next;
     }
     return NULL;
