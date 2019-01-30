@@ -43,7 +43,7 @@ block_t get_block_ptr(void *ptr)
 
 int valid_ptr(void *ptr)
 {
-    block_t tmp = get_head(0);
+    block_t tmp = get_head(1);
 
     if (tmp)
         if (ptr > (void *)tmp && ptr < sbrk(0))

@@ -11,18 +11,18 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdbool.h>
 
-typedef uint8_t bool_t;
-#define true 1
-#define false 0
 #define BLOCK_SIZE sizeof(struct s_block)
+#define ALIGN(x) (((((x) - 1) >> 2) << 2) + 4)
+#define ALIGNPAGE(x) (((((x) - 1) >> 2) << 2) + getpagesize())
 
 typedef struct s_block *block_t;
 
 struct s_block {
 	size_t size;
 	block_t next;
-	bool_t free;
+	bool free;
 };
 
 void *malloc(size_t size);

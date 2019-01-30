@@ -10,10 +10,11 @@
 block_t get_head(size_t size)
 {
     static block_t head = NULL;
-    static bool_t first = true;
+    static bool first = true;
+    void *block;
 
     if (first) {
-        void *block = sbrk(BLOCK_SIZE + size);
+        block = sbrk(BLOCK_SIZE + size);
         if (block == (void *)-1)
             return NULL;
         head = block;
@@ -28,8 +29,8 @@ block_t get_head(size_t size)
 block_t new_block(size_t size)
 {
     void *block = sbrk(BLOCK_SIZE + size);
-    block_t new;
     block_t tmp = get_head(size);
+    block_t new;
 
     if (block == (void *)-1)
         return NULL;
@@ -45,9 +46,8 @@ block_t new_block(size_t size)
 
 block_t check_size(block_t block, size_t size)
 {
-    if (block->size > (size + BLOCK_SIZE)) {
+    if (block->size >= (size + BLOCK_SIZE))
         block = split_block(block, size);
-    }
     return block;
 }
 
@@ -69,6 +69,10 @@ void *malloc(size_t size)
 
     if (!size)
         return NULL;
+    if (size < (size_t)getpagesize())
+        size = ALIGN(size);
+    else
+        size = ALIGNPAGE(size);
     header = find_block(size);
     if (header) {
         header->free = false;
