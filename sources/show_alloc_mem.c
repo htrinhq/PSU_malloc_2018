@@ -14,8 +14,8 @@ void show_alloc_mem(void)
     setvbuf(stdout, NULL, _IONBF, 0);
     printf("break : %p\n", sbrk(0));
     while (tmp->next) {
-        printf("%p - %p : %ld bytes\n", tmp + 1, (tmp + 1 + BLOCK_SIZE + tmp->size), tmp->size);
+        printf("%p - %p : %ld bytes\n", tmp + 1,
+        (tmp + 1 + BLOCK_SIZE + tmp->size), tmp->size);
         tmp = tmp->next;
     }
-    
 }

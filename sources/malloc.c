@@ -71,10 +71,7 @@ void *malloc(size_t size)
     if (!size)
         return NULL;
     pthread_mutex_lock(&mutex);
-    if (size < (size_t)getpagesize())
-        size = ALIGN(size);
-    else
-        size = ALIGNPAGE(size);
+    size = (size < (size_t)getpagesize()) ? ALIGN(size) : ALIGNPAGE(size);
     header = find_block(size);
     if (header) {
         header->free = false;
