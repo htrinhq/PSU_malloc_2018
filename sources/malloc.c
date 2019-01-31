@@ -7,8 +7,6 @@
 
 #include "malloc.h"
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
 block_t get_head(size_t size)
 {
     static block_t head = NULL;
@@ -68,6 +66,7 @@ block_t find_block(size_t size)
 void *malloc(size_t size)
 {
     block_t header;
+    static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
     if (!size)
         return NULL;
