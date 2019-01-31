@@ -7,6 +7,8 @@
 
 #include "malloc.h"
 
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 block_t get_head(size_t size)
 {
     static block_t head = NULL;
@@ -69,6 +71,7 @@ void *malloc(size_t size)
 
     if (!size)
         return NULL;
+    pthread_mutex_lock(&mutex);
     if (size < (size_t)getpagesize())
         size = ALIGN(size);
     else
@@ -77,11 +80,14 @@ void *malloc(size_t size)
     if (header) {
         header->free = false;
         header->size = size;
+        pthread_mutex_unlock(&mutex);
         return (void *)(header + 1);
     } else {
         header = new_block(size);
+        pthread_mutex_unlock(&mutex);
         if (!header)
             return NULL;
     }
+    pthread_mutex_unlock(&mutex);
     return (void *)(header + 1);
 }

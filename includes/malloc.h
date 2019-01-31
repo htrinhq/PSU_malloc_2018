@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
+#include <pthread.h>
 
 #define BLOCK_SIZE sizeof(struct s_block)
 #define ALIGN(x) (((((x) - 1) >> 2) << 2) + 4)
